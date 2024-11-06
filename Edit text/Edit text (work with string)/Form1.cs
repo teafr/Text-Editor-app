@@ -50,9 +50,10 @@ namespace Edit_text__work_with_string_
                     ButtonDisabled(bFix);
                     bFix.Text = "Corrected";
 
-                    await Task.Delay(2000);
+                    await Task.Delay(1500);
                     
                     ButtonEnabled(bFix);
+                    ButtonEnabled(bRestart);
                     bFix.Text = "Copy";
 
                     _firstStage = false;
@@ -63,7 +64,6 @@ namespace Edit_text__work_with_string_
                 Clipboard.SetDataObject(textBox.Text);
                 bFix.Text = "Saved";
                 ButtonDisabled(bFix);
-                ButtonEnabled(bRestart);
             }
         }
         private void bRestart_Click(object sender, EventArgs e)
@@ -73,6 +73,7 @@ namespace Edit_text__work_with_string_
 
             ButtonEnabled(bFix);
             ButtonDisabled(bRestart);
+            _firstStage = true;
         }
         string CheckAllIntrodactoryWords(string text)
         {
@@ -96,6 +97,7 @@ namespace Edit_text__work_with_string_
         }        
         string SpacesChecker(string text)
         {
+            text = text.Trim();
             if (text[text.Length - 1] == '.')
                 text = text.Remove(text.Length - 1, 1);
 

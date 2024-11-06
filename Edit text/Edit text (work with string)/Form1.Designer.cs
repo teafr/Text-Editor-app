@@ -97,6 +97,7 @@
             MinimizeBox = false;
             Name = "Editor";
             ShowIcon = false;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "TEXT EDITOR";
             Load += Form1_Load;
             ResumeLayout(false);
