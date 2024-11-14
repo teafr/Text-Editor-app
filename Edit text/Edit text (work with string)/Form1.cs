@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 namespace Edit_text__work_with_string_
 {
     public partial class Editor : Form
@@ -41,9 +42,7 @@ namespace Edit_text__work_with_string_
                 else
                 {
                     string text = textBox.Text;
-
-                    text = CheckAllIntrodactoryWords(text);
-                    text = SpacesChecker(text);
+                    FixText(ref text);
 
                     textBox.Text = text;
 
@@ -54,6 +53,7 @@ namespace Edit_text__work_with_string_
                     
                     ButtonEnabled(bFix);
                     ButtonEnabled(bRestart);
+
                     bFix.Text = "Copy";
 
                     _firstStage = false;
@@ -75,27 +75,33 @@ namespace Edit_text__work_with_string_
             ButtonDisabled(bRestart);
             _firstStage = true;
         }
-        string CheckAllIntrodactoryWords(string text)
+
+        void FixText(ref string text)
+        {
+            CheckAllIntrodactoryWords(ref text);
+            SpacesChecker(ref text);
+            ReplayceAbbreviations(ref text);
+        }
+        void CheckAllIntrodactoryWords(ref string text)
         {
             foreach (var introductoryWord in _introductoryWords)
-                text = CheckForComma(text, introductoryWord);
-            return text;
+                CheckForComma(ref text, introductoryWord);
         }
-        string CheckForComma(string text, string introdactoryWord)
+        void CheckForComma(ref string text, string introdactoryWord)
         {
             int index = -1;
             do
             {
                 index = text.ToLower().IndexOf(introdactoryWord, index + 1);
                 if (index == -1)
-                    return text;
+                    break;
 
                 if (text[index + introdactoryWord.Length] != ',')
                     text = text.Insert(index + introdactoryWord.Length, ",");
             }
             while (true);
         }        
-        string SpacesChecker(string text)
+        void SpacesChecker(ref string text)
         {
             text = text.Trim();
             if (text[text.Length - 1] == '.')
@@ -107,7 +113,10 @@ namespace Edit_text__work_with_string_
                 index = text.IndexOfAny(".,".ToCharArray(), index + 1);
 
                 if(index == -1)
-                    return text + ".";
+                {
+                    text += ".";
+                    break;
+                }
 
                 if (text[index + 1] != ' ')
                     text = text.Insert(index + 1, " ");
@@ -116,6 +125,28 @@ namespace Edit_text__work_with_string_
                     text = text.Remove(index - 1, 1);
             }
             while (true);
+        }
+        void ReplayceAbbreviations(ref string text)
+        {
+            text = text.ToLower().Replace("brb", "be right back");
+            text = text.ToLower().Replace("lol", "laugh out loud");
+            text = text.ToLower().Replace("btw", "by the way");
+            text = text.ToLower().Replace("idk", "I don't know");
+            text = text.ToLower().Replace("ttyl", "talk to you later");
+            text = text.ToLower().Replace("lmk", "let me know");
+            text = text.ToLower().Replace("nvm", "nevermind");
+            text = text.ToLower().Replace("imo", "in my opinion");
+            text = text.ToLower().Replace("imho", "in my humble opinion");
+            text = text.ToLower().Replace("tbo", "to be honest");
+            text = text.ToLower().Replace("thx", "thanks");
+            text = text.ToLower().Replace("jk", "just kidding");
+            text = text.ToLower().Replace("bc", "because");
+            text = text.ToLower().Replace("wbu", "what about you");
+            text = text.ToLower().Replace("sry", "sorry"); 
+            text = text.ToLower().Replace("asap", "as soon as possible");
+
+            text = text.ToLower().Replace(" k ", " okay ");
+            text = text.ToLower().Replace(" u ", " you ");
         }
 
         void ButtonDisabled(Button button)
