@@ -20,4 +20,4 @@ So application basically formats your text.
 It's a Windows Forms Application which contains JSON file with introductory words. 
 Button "Fix text" has two stages. I control these stages with help of bool variable. 
 I have methods for enabling and disabling buttons and methods for correcting text. 
-I guess, project will grow in future (I have an idea of replacing abbreviations etc), so I'll add some new features later.
+I guess, project will grow in future, so I'll add some new features later.
