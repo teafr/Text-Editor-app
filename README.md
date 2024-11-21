@@ -9,6 +9,8 @@ You'll get your text:
 - without redundant spaces before dots and commas
 - with commas after introductory words
 - with spaces after dots and commas
+- with replaced abbreviations (in video i didn't demonstrate it, because at that time app didn't have this feature)
+<br/>
 So application basically formats your text.
 
 ### How it looks like:
